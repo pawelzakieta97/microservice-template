@@ -2,7 +2,7 @@ import pika
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import pymongo
+# import pymongo
 import rpc_test.client
 
 # set up the SMTP server
