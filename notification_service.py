@@ -2,7 +2,7 @@ import pika
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-# import pymongo
+import pymongo
 import rpc_test.client
 
 # set up the SMTP server
@@ -26,7 +26,9 @@ class NotificationService(rpc_test.client.RpcClient):
         self.channel.queue_bind(exchange='new_reservation', queue=queue.method.queue)
         self.channel.basic_consume(queue=queue.method.queue, auto_ack=True,
                               on_message_callback=self.new_reservation_callback)
-
+        self.client = pymongo.MongoClient(
+            "mongodb+srv://admin:admin@cluster0-jinrj.mongodb.net/test?retryWrites=true&w=majority")
+        self.db = self.client.cyanide
         # print(self.call('123', 'get_table_details'))
 
 
@@ -38,6 +40,10 @@ class NotificationService(rpc_test.client.RpcClient):
         print('rpc finished')
         print(f"New entry in notification database should be added."
               f"details to be added: {table_details}")
+        self.add_reservation(user_email=reservation_info['user_id']+'@gmail.com',
+                             location_address='address form table detail received from rpc',
+                             date=reservation_info['date'],
+                             time=reservation_info['time'])
 
     def send_email(message):
         s = smtplib.SMTP('smtp.wp.pl', 587)
@@ -51,15 +57,23 @@ class NotificationService(rpc_test.client.RpcClient):
         s.send_message(msg)
         del msg
 
+    def add_reservation(self, user_email, location_address, date, time):
+
+        self.db.reservations.insert_one({'user_email': user_email,
+                                    'location_address': location_address,
+                                    'date': date,
+                                    'time': time})
+        print(self.db.reservations.count())
+
     def run(self):
         self.channel.start_consuming()
 
 
 if __name__ == '__main__':
-    # client = pymongo.MongoClient(
-    #     "mongodb+srv://admin:admin@cluster0-jinrj.mongodb.net/test?retryWrites=true&w=majority")
-    # db = client.test
-    # serverStatusResult = db.command("serverStatus")
-    # print(serverStatusResult)
     service = NotificationService()
+    service.add_reservation(user_email='pawelzakieta97@gmail.com',
+                            location_address='restaurant street 69',
+                            date='01.06.2020',
+                            time='16.00')
+
     service.run()
