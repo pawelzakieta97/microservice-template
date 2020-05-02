@@ -1,5 +1,6 @@
 import service
 import sql_alchemy_connector
+import db_connector
 from sqlalchemy import create_engine
 from sqlalchemy import Column, String, Integer, ForeignKey, Date
 from sqlalchemy.ext.declarative import declarative_base
@@ -70,6 +71,8 @@ if __name__ == '__main__':
 
     # creating the service instance
     service = ReservationService()
+    # comment this line to use actual database
+    service.db_con = db_connector.DBConnectorMock()
 
     # force-cleaning
     service.clear_table('reservations', force=True)

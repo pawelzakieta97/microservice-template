@@ -21,5 +21,5 @@ class DBConnectorMock(DBConnector):
         return True
     def delete(self, table_name, data):
         return True
-    def drop(self, table_name):
+    def clear(self, table_name):
         return True

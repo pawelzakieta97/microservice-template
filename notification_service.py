@@ -1,6 +1,7 @@
 from datetime import date
 import service
 import sql_alchemy_connector
+import db_connector
 from sqlalchemy import Column, String, Integer, ForeignKey, Date
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
@@ -67,9 +68,6 @@ class NotificationService(service.Service):
                             f'a table for {row.guests}')
 
 if __name__ == '__main__':
-    # initiating the service
-    service = NotificationService(name='test_notifications')
-
     # generating initial data for restaurants
     restaurant_names = ['kfc', 'burgerking', 'subway', 'mcdonalds']
     addresses = [f'{name} street' for name in restaurant_names]
@@ -77,6 +75,11 @@ if __name__ == '__main__':
     restaurants_data = [{'_id': id, 'name': name, 'address': address} for
                         id, name, address in
                         zip(restaurant_ids, restaurant_names, addresses)]
+
+    # initiating the service
+    service = NotificationService(name='test_notifications')
+    # comment this line to use actual database
+    service.db_con = db_connector.DBConnectorMock()
 
     # clearing all tables (firstly the reservation table not to violate
     # constrains) and filling the restaurants table with initial data.
