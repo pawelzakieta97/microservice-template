@@ -1,79 +1,92 @@
-import pika
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-import pymongo
-import rpc_test.client
+from datetime import date
+import service
+import sql_alchemy_connector
+from sqlalchemy import Column, String, Integer, ForeignKey, Date
+from sqlalchemy.ext.declarative import declarative_base
+import datetime
 
-# set up the SMTP server
-# s = smtplib.SMTP('smtp.gmail.com', 587)
 EMAIL_ADDR = 'cyanide_service@wp.pl'
 PASSWORD = 'password'
 
-class NotificationService(rpc_test.client.RpcClient):
-    def __init__(self):
+class NotificationService(service.Service):
+    def __init__(self, name='notification_service'):
+        super().__init__(name, table_names=['reservations', 'restaurants'])
+        base = declarative_base()
+        class Restaurant(base):
+            __tablename__ = 'restaurants'
+            __table_args__ = {'schema': 'notification_microservice'}
+            _id = Column(Integer, primary_key=True)
+            name = Column(String)
+            address = Column(String)
 
-        super().__init__()
-        self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host='localhost'))
+        class Reservation(base):
+            __tablename__ = 'reservations'
+            __table_args__ = {"schema": "notification_microservice"}
+            _id = Column(Integer, primary_key=True)
+            restaurant_id = Column(Integer, ForeignKey(
+                'notification_microservice.restaurants._id'))
+            email = Column(String)
+            date = Column(Date)
+            time = Column(String)
+            guests = Column(Integer)
 
-        self.channel = self.connection.channel()
+        self.db_con = sql_alchemy_connector.\
+            SQLAlchemyConnector([Restaurant, Reservation],
+                                url="localhost", db_name='postgres',
+                                username='reservation_service', password='password')
+        base.metadata.create_all(self.db_con.db)
 
-        self.channel.exchange_declare(exchange='new_reservation',
-                                 exchange_type='fanout')
-        queue = self.channel.queue_declare(queue='notification_queue',
-                                      auto_delete=True)
-        self.channel.queue_bind(exchange='new_reservation', queue=queue.method.queue)
-        self.channel.basic_consume(queue=queue.method.queue, auto_ack=True,
-                              on_message_callback=self.new_reservation_callback)
-        self.client = pymongo.MongoClient(
-            "mongodb+srv://admin:admin@cluster0-jinrj.mongodb.net/test?retryWrites=true&w=majority")
-        self.db = self.client.cyanide
-        # print(self.call('123', 'get_table_details'))
+    def send_email(self, address, topic, message):
+        print()
+        print(topic)
+        print(message)
+        pass
+        # CALL EMAIL SENDING PROCEDURE VIA CELERY
 
+    def get_today(self):
+        return date.today()
 
-    def new_reservation_callback(self, ch, methof, properties, body):
-        reservation_info = eval(body)
-        table_id = reservation_info['table_id']
-        print(f"[x] Received {body}")
-        table_details = self.call(table_id, 'get_table_details')
-        print('rpc finished')
-        print(f"New entry in notification database should be added."
-              f"details to be added: {table_details}")
-        self.add_reservation(user_email=reservation_info['user_id']+'@gmail.com',
-                             location_address='address form table detail received from rpc',
-                             date=reservation_info['date'],
-                             time=reservation_info['time'])
+    def notify(self):
+        """
+        goes through all the reservation records that are due today and sends
+        and email. An email should be sent by invoking a task to a worker pool
+        :return:
 
-    def send_email(message):
-        s = smtplib.SMTP('smtp.wp.pl', 587)
-        s.starttls()
-        s.login(EMAIL_ADDR, PASSWORD)
-        msg = MIMEMultipart()
-        msg['From'] = EMAIL_ADDR
-        msg['To'] = 'pawelzakieta97@gmail.com'
-        msg['Subject'] = 'test message'
-        msg.attach(MIMEText(message, 'plain'))
-        s.send_message(msg)
-        del msg
-
-    def add_reservation(self, user_email, location_address, date, time):
-
-        self.db.reservations.insert_one({'user_email': user_email,
-                                    'location_address': location_address,
-                                    'date': date,
-                                    'time': time})
-        print(self.db.reservations.count())
-
-    def run(self):
-        self.channel.start_consuming()
-
+        TODO:
+            create a worker pool (celery seems to be a good option for that)
+        """
+        Reservation = self.db_con.table_data['reservations']
+        Restaurant = self.db_con.table_data['restaurants']
+        data = self.db_con.session.query(Reservation, Restaurant).\
+            filter(Reservation.restaurant_id == Restaurant._id).\
+            filter(Reservation.date == datetime.date.today())
+        for row in data:
+            self.send_email(row.email, f'Your reservation at {row.name}',
+                            f'This is a reminder of your for '
+                            f'location {row.address}, {row.time},'
+                            f'a table for {row.guests}')
 
 if __name__ == '__main__':
-    service = NotificationService()
-    service.add_reservation(user_email='pawelzakieta97@gmail.com',
-                            location_address='restaurant street 69',
-                            date='01.06.2020',
-                            time='16.00')
+    # initiating the service
+    service = NotificationService(name='test_notifications')
 
+    # generating initial data for restaurants
+    restaurant_names = ['kfc', 'burgerking', 'subway', 'mcdonalds']
+    addresses = [f'{name} street' for name in restaurant_names]
+    restaurant_ids = [i for i in range(len(restaurant_names))]
+    restaurants_data = [{'_id': id, 'name': name, 'address': address} for
+                        id, name, address in
+                        zip(restaurant_ids, restaurant_names, addresses)]
+
+    # clearing all tables (firstly the reservation table not to violate
+    # constrains) and filling the restaurants table with initial data.
+    # Since notification service is not the owner of any tables, it
+    # normally would not have permission to edit them, hence the `force` flag
+    service.clear_table('reservations', force=True)
+    service.clear_table('restaurants', force=True)
+    service.init_table('restaurants', restaurants_data, force=True)
+
+    # running the service. If reservation service is run afterwards, all the
+    # reservation data added via reservation service will be automatically added
+    # to reservations table of this service
     service.run()

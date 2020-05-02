@@ -1,32 +1,79 @@
-import pika
-import rpc_test.server
+import service
+import sql_alchemy_connector
+from sqlalchemy import create_engine
+from sqlalchemy import Column, String, Integer, ForeignKey, Date
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+import datetime
 
-class ReservationService(rpc_test.server.RpcServer):
-    def __init__(self):
-        super().__init__()
-        self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host='localhost'))
+class ReservationService(service.Service):
+    def __init__(self, name='reservation_service'):
+        super().__init__(name, table_names=['restaurants', 'reservations'],
+                         owned_tables=['reservations'])
 
-        self.channel = self.connection.channel()
-        self.channel.exchange_declare(exchange='new_reservation',
-                                 exchange_type='fanout')
-        queue = self.channel.queue_declare(queue='reservation_queue',
-                                      auto_delete=True)
-        self.channel.queue_bind(exchange='new_reservation', queue=queue.method.queue)
-        self.channel.basic_consume(queue=queue.method.queue, auto_ack=True,
-                          on_message_callback=self.new_reservation_callback)
+        # Defining the database
+        base = declarative_base()
+        class Restaurant(base):
+            __tablename__ = 'restaurants'
+            __table_args__ = {'schema': 'reservation_microservice'}
+            _id = Column(Integer, primary_key=True)
+            name = Column(String)
+            address = Column(String)
 
-        self.register_function(self.get_table_details, 'get_table_details')
+        class Reservation(base):
+            __tablename__ = 'reservations'
+            __table_args__ = {"schema": "reservation_microservice"}
+            _id = Column(Integer, primary_key=True)
+            restaurant_id = Column(Integer, ForeignKey(
+                'reservation_microservice.restaurants._id'))
+            email = Column(String)
+            date = Column(Date)
+            time = Column(String)
+            guests = Column(Integer)
 
-    def get_table_details(self, table_id):
-        return f'mock details for table {table_id}'
+        # Assigning an SQLAlchemy database connector
+        self.db_con = sql_alchemy_connector.SQLAlchemyConnector([Restaurant, Reservation],
+                                                       url='localhost', db_name='postgres',
+                                                       username='reservation_service', password='password')
 
-    def new_reservation_callback(self, ch, method, properties, body):
-        print(f"[x] Received {body}\n. This service should now put the reservation in the database")
+        # Creating the tables if they do not exist
+        base.metadata.create_all(self.db_con.db)
 
-    def run(self):
-        self.channel.start_consuming()
+        # defining the methods that this service can execute as an RPC server
+        self.register_task(self.create_reservation, 'create_reservation')
+        self.register_task(self.get_reservation_by_id, 'get_reservation_by_id')
+
+    def create_reservation(self, data):
+        print('reservation creation called')
+        created, id = self.create_record('reservations', data)
+        return created, id
+
+    def get_reservation_by_id(self, id):
+        return self.db_con.select('reservations', filter={'_id': id})
+
 
 if __name__ == '__main__':
+
+    # Generating initial restaurant table data
+    restaurant_names = ['kfc', 'burgerking', 'subway', 'mcdonalds']
+    addresses = [f'{name} street' for name in restaurant_names]
+    restaurant_ids = [i for i in range(len(restaurant_names))]
+    restaurants_data = [{'_id': id, 'name': name, 'address': address} for id, name, address in zip(restaurant_ids, restaurant_names, addresses)]
+
+    #generating initial reservations darta
+    user_names = ['tomek', 'robert', 'justyna', 'anton', 'khanh', 'pawel']
+    emails = [f'{name}@gmail.com' for name in user_names]
+    rest_ids = [i%len(restaurant_names) for i in range(len(user_names))]
+    reserv_ids = [i for i in range(len(user_names))]
+    reservations_data = [{'_id': reserv_id, 'email': email, 'restaurant_id': rest_id,'date': datetime.date.today(), 'time': 'breakfast'}
+                         for reserv_id, email, rest_id in zip(reserv_ids, emails, rest_ids)]
+
+    # creating the service instance
     service = ReservationService()
+
+    # force-cleaning
+    service.clear_table('reservations', force=True)
+    service.clear_table('restaurants', force=True)
+    service.init_table('restaurants', restaurants_data, force=True)
+    service.init_table('reservations', reservations_data)
     service.run()
