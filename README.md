@@ -2,6 +2,7 @@
 
 ## How to run:
 + install RabbitMQ and run it on default params (localhost, guest:guest)
++ (OPTIONAL) Install postgreSQL server. Create 2 schemas in `postgres` database: `notification_microservice` and `reservation_microservice`. Create accounts: `reservation_microservice:password` and `notification_microservice:password`
 + Install `requirements.txt` by using command `pip install requirements.txt`
 + Run (multiple instances) of `notification_service.py` by running command `python notification_service.py` (in multiple terminals)
 + Run one instance of `reservation_service.py` (command `python reservation_service.py`)
