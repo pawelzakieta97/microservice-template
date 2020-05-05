@@ -132,7 +132,7 @@ class Service:
             updated = self.db_con.update(table_name, data)
             if updated:
                 data['method'] = 'update'
-                self.channel.basic_publish(exchange='table', routing_key='',
+                self.channel.basic_publish(exchange=table_name, routing_key='',
                                            body=str(data))
         else:
             updated = self.db_con.update(table_name, data)
@@ -147,7 +147,7 @@ class Service:
             deleted = self.db_con.delete(table_name, data)
             if deleted:
                 data['method'] = 'delete'
-                self.channel.basic_publish(exchange='table', routing_key='',
+                self.channel.basic_publish(exchange=table_name, routing_key='',
                                            body=str(data))
         else:
             deleted = self.db_con.delete(table_name, data)
@@ -162,7 +162,7 @@ class Service:
             cleared = self.db_con.clear(table_name)
             if cleared:
                 data = {'method': 'clear'}
-                self.channel.basic_publish(exchange='table', routing_key='',
+                self.channel.basic_publish(exchange=table_name, routing_key='',
                                            body=str(data))
         else:
             cleared = self.db_con.clear(table_name)

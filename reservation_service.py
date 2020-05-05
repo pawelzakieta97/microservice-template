@@ -77,6 +77,10 @@ if __name__ == '__main__':
     # force-cleaning
     service.clear_table('reservations', force=True)
     service.clear_table('restaurants', force=True)
+    # Initiating tables
     service.init_table('restaurants', restaurants_data, force=True)
     service.init_table('reservations', reservations_data)
+
+
+    # service.create_record('reservations', {'_id': 7, 'email': 'email@email.com', 'restaurant_id': 1,'date': datetime.date.today(), 'time': 'breakfast'})
     service.run()
