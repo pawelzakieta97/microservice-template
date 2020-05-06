@@ -1,5 +1,8 @@
 import threading
 
+# This is necessary even though it says it is not (evaluating date)
+import datetime
+
 import pika
 import callme
 import logging_service.log_message
@@ -78,10 +81,12 @@ class Service:
             `table_name`
             """
             data = eval(body)
-            self.log(topic=f'Table {table_name} updated.',
-                     content='Event data:{data}')
+
             if 'method' in data.keys():
+
                 method = data.pop('method')
+                self.log(topic=f'Table {table_name} updated with {method.upper()}.',
+                         content=f'Event data:{data}')
                 if method == 'create':
                     self.create_record(table_name, data, force=True)
                 if method == 'update':
@@ -129,6 +134,7 @@ class Service:
                 # if record has been successfully created, fire an event to
                 # inform other microservices of new record
                 data['method'] = 'create'
+                data['_id']=id
                 self.channel.basic_publish(exchange=table_name, routing_key='',
                                            body=str(data))
         else:

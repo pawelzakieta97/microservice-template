@@ -3,40 +3,43 @@ from database_connector import sql_alchemy_connector
 from sqlalchemy import Column, String, Integer, ForeignKey, Date
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
+import database_connector.db_connector
 
 
 class ReservationService(service.Service):
-    def __init__(self, name='reservation_service'):
+    def __init__(self, name='reservation_service', use_mock_database=True):
         super().__init__(name, table_names=['restaurants', 'reservations'],
                          owned_tables=['reservations'])
+        if use_mock_database:
+            self.db_con = database_connector.db_connector.DBConnectorMock()
+        else:
+            # Defining the database
+            base = declarative_base()
+            class Restaurant(base):
+                __tablename__ = 'restaurants'
+                __table_args__ = {'schema': 'reservation_microservice'}
+                _id = Column(Integer, primary_key=True)
+                name = Column(String)
+                address = Column(String)
 
-        # Defining the database
-        base = declarative_base()
-        class Restaurant(base):
-            __tablename__ = 'restaurants'
-            __table_args__ = {'schema': 'reservation_microservice'}
-            _id = Column(Integer, primary_key=True)
-            name = Column(String)
-            address = Column(String)
+            class Reservation(base):
+                __tablename__ = 'reservations'
+                __table_args__ = {"schema": "reservation_microservice"}
+                _id = Column(Integer, primary_key=True)
+                restaurant_id = Column(Integer, ForeignKey(
+                    'reservation_microservice.restaurants._id'))
+                email = Column(String)
+                date = Column(Date)
+                time = Column(String)
+                guests = Column(Integer)
 
-        class Reservation(base):
-            __tablename__ = 'reservations'
-            __table_args__ = {"schema": "reservation_microservice"}
-            _id = Column(Integer, primary_key=True)
-            restaurant_id = Column(Integer, ForeignKey(
-                'reservation_microservice.restaurants._id'))
-            email = Column(String)
-            date = Column(Date)
-            time = Column(String)
-            guests = Column(Integer)
+            # Assigning an SQLAlchemy database connector
+            self.db_con = sql_alchemy_connector.SQLAlchemyConnector([Restaurant, Reservation],
+                                                                    url='localhost', db_name='postgres',
+                                                                    username='reservation_service', password='password')
 
-        # Assigning an SQLAlchemy database connector
-        self.db_con = sql_alchemy_connector.SQLAlchemyConnector([Restaurant, Reservation],
-                                                                url='localhost', db_name='postgres',
-                                                                username='reservation_service', password='password')
-
-        # Creating the tables if they do not exist
-        base.metadata.create_all(self.db_con.db)
+            # Creating the tables if they do not exist
+            base.metadata.create_all(self.db_con.db)
 
         # defining the methods that this service can execute as an RPC server
         self.register_task(self.create_reservation, 'create_reservation')
@@ -72,7 +75,7 @@ if __name__ == '__main__':
     #     for reserv_id, email, rest_id in zip(reserv_ids, emails, rest_ids)]
 
     # creating the service instance
-    service = ReservationService()
+    service = ReservationService(use_mock_database=False)
     # comment this line to use actual database
     # service.db_con = db_connector.DBConnectorMock()
 

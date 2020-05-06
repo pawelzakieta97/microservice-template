@@ -9,32 +9,36 @@ EMAIL_ADDR = 'cyanide_service@wp.pl'
 PASSWORD = 'password'
 
 class NotificationService(service.Service):
-    def __init__(self, name='notification_service'):
+    def __init__(self, use_mock_database=True, name='notification_service'):
         super().__init__(name, table_names=['reservations', 'restaurants'])
-        base = declarative_base()
-        class Restaurant(base):
-            __tablename__ = 'restaurants'
-            __table_args__ = {'schema': 'notification_microservice'}
-            _id = Column(Integer, primary_key=True)
-            name = Column(String)
-            address = Column(String)
+        if use_mock_database:
+            self.db_con = db_connector.DBConnectorMock()
+        else:
+            base = declarative_base()
+            class Restaurant(base):
+                __tablename__ = 'restaurants'
+                __table_args__ = {'schema': 'notification_microservice'}
+                _id = Column(Integer, primary_key=True)
+                name = Column(String)
+                address = Column(String)
 
-        class Reservation(base):
-            __tablename__ = 'reservations'
-            __table_args__ = {"schema": "notification_microservice"}
-            _id = Column(Integer, primary_key=True)
-            restaurant_id = Column(Integer, ForeignKey(
-                'notification_microservice.restaurants._id'))
-            email = Column(String)
-            date = Column(Date)
-            time = Column(String)
-            guests = Column(Integer)
+            class Reservation(base):
+                __tablename__ = 'reservations'
+                __table_args__ = {"schema": "notification_microservice"}
+                _id = Column(Integer, primary_key=True)
+                restaurant_id = Column(Integer, ForeignKey(
+                    'notification_microservice.restaurants._id'))
+                email = Column(String)
+                date = Column(Date)
+                time = Column(String)
+                guests = Column(Integer)
 
-        self.db_con = sql_alchemy_connector.\
-            SQLAlchemyConnector([Restaurant, Reservation],
-                                url="localhost", db_name='postgres',
-                                username='reservation_service', password='password')
-        base.metadata.create_all(self.db_con.db)
+
+            self.db_con = sql_alchemy_connector.\
+                SQLAlchemyConnector([Restaurant, Reservation],
+                                    url="localhost", db_name='postgres',
+                                    username='reservation_service', password='password')
+            base.metadata.create_all(self.db_con.db)
 
     def send_email(self, address, topic, message):
         print()
@@ -76,9 +80,7 @@ if __name__ == '__main__':
                         zip(restaurant_ids, restaurant_names, addresses)]
 
     # initiating the service
-    service = NotificationService()
-    # comment this line to use actual database
-    service.db_con = db_connector.DBConnectorMock()
+    service = NotificationService(use_mock_database=False)
 
     # clearing all tables (firstly the reservation table not to violate
     # constrains) and filling the restaurants table with initial data.
