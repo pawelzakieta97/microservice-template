@@ -1,10 +1,8 @@
-import pymongo
 from sqlalchemy import create_engine
-from sqlalchemy import Column, String, Integer, ForeignKey, Date
+from sqlalchemy import Column, String, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import datetime
-from db_connector import DBConnector
+from database_connector.db_connector import DBConnector
 
 class SQLAlchemyConnector(DBConnector):
     def __init__(self, metadata_classes, url="localhost", db_name='postgres',
@@ -62,6 +60,15 @@ class SQLAlchemyConnector(DBConnector):
         """
         table_class = self.table_data[table_name]
         self.session.query(table_class).delete()
+        return True
+
+    def update(self, table_name, data):
+        """
+        TODO:
+            update method
+        :param table_name:
+        :return:
+        """
 
     @staticmethod
     def row2dict(obj):

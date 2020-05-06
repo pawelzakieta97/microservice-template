@@ -1,5 +1,5 @@
 import pymongo
-from db_connector import DBConnector
+from database_connector.db_connector import DBConnector
 
 class MongoConnector(DBConnector):
     def __init__(self, url="mongodb+srv://admin:admin@cluster0-jinrj.mongodb.net/test?retryWrites=true&w=majority", db_name='cyanide'):

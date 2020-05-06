@@ -1,7 +1,6 @@
 from datetime import date
 import service
-import sql_alchemy_connector
-import db_connector
+from database_connector import db_connector, sql_alchemy_connector
 from sqlalchemy import Column, String, Integer, ForeignKey, Date
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
@@ -77,7 +76,7 @@ if __name__ == '__main__':
                         zip(restaurant_ids, restaurant_names, addresses)]
 
     # initiating the service
-    service = NotificationService(name='test_notifications')
+    service = NotificationService()
     # comment this line to use actual database
     service.db_con = db_connector.DBConnectorMock()
 

@@ -1,9 +1,8 @@
 import threading
 
 import pika
-from db_connector import DBConnector
 import callme
-import datetime
+import logging_service.log_message
 
 class Service:
     """
@@ -11,7 +10,7 @@ class Service:
     for calls from API gateway and handles data integration events.
     """
     def __init__(self, service_name, url='localhost', table_names=None,
-                 owned_tables=None, db_connector=None):
+                 owned_tables=None, db_connector=None, console_debug=True):
         self.service_name = service_name
         self.table_names = table_names
         self.db_con = db_connector
@@ -23,7 +22,7 @@ class Service:
         # Opening connection with RabbotMQ for events handling
         connection = pika.BlockingConnection(pika.ConnectionParameters(host=url))
         self.channel = connection.channel()
-
+        self.console_debug = console_debug
         # Subscribig to events that concern tables that are not owned by this
         # service. Assuming that only an owner can edit a table and there is
         # only one owner per table, owner does not have to listen to events.
@@ -38,6 +37,10 @@ class Service:
         self.server = callme.Server(server_id=service_name, amqp_host=url,
                                     threaded=True)
         self.registered_tasks = []
+
+        # initiating log exchange in case it does not yet exist
+        self.channel.exchange_declare(exchange='log',
+                                      exchange_type='fanout')
 
     def register_task(self, method, method_name):
         """Registers a task taht can be executed via RPC (this service is a
@@ -75,6 +78,8 @@ class Service:
             `table_name`
             """
             data = eval(body)
+            self.log(topic=f'Table {table_name} updated.',
+                     content='Event data:{data}')
             if 'method' in data.keys():
                 method = data.pop('method')
                 if method == 'create':
@@ -85,11 +90,19 @@ class Service:
                     self.delete_record(table_name, data, force=True)
                 if method == 'clear':
                     self.clear_table(table_name, force=True)
-            print(body)
             pass
 
         self.channel.basic_consume(queue=queue.method.queue, auto_ack=True,
                                    on_message_callback=callback)
+
+    def log(self, topic, content=None, type='log', debug=True, author=None):
+        if author is None:
+            author = self.service_name
+        msg = logging_service.log_message.LogMessage(author=author, topic=topic, content=content, type=type, debug=debug)
+        if self.console_debug:
+            print(str(msg))
+        self.channel.basic_publish(exchange='log', routing_key='',
+                                   body=str(msg))
 
     def create_record(self, table_name, data, force=False):
         """Adds a record to a table
@@ -104,7 +117,7 @@ class Service:
         allows for initiating the database in debug stage
         :return:
         """
-        print('add record called')
+        self.log(f'Adding record to table {table_name}')
         if not force and table_name not in self.owned_tables:
             raise ValueError(f'This service cant directly modify table'
                              f'{table_name} because it does not own the table.'
@@ -122,8 +135,8 @@ class Service:
             created, id = self.db_con.create(table_name, data)
         return created, id
 
+
     def update_record(self, table_name, data, force=False):
-        print('update record called')
         if not force and table_name not in self.owned_tables:
             raise ValueError('This service cant directly modify a table that '
                              'it does not own. Call this method via RPC on a '
