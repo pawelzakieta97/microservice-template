@@ -1,9 +1,14 @@
+import os,sys,inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0,parentdir)
+
 from datetime import date
-import service
 from database_connector import db_connector, sql_alchemy_connector
 from sqlalchemy import Column, String, Integer, ForeignKey, Date
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
+import service
 
 EMAIL_ADDR = 'cyanide_service@wp.pl'
 PASSWORD = 'password'

@@ -1,10 +1,14 @@
-import service
+import os,sys,inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0,parentdir)
+
 from database_connector import sql_alchemy_connector
 from sqlalchemy import Column, String, Integer, ForeignKey, Date
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
 import database_connector.db_connector
-
+import service
 
 class ReservationService(service.Service):
     def __init__(self, name='reservation_service', use_mock_database=True):
