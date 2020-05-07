@@ -1,0 +1,131 @@
+2020-05-06 20:51:43.541222AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+2020-05-06 20:51:43.541222AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+2020-05-06 20:51:43.541222AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+2020-05-06 20:51:43.541222AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:52:23AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:52:23AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:52:23AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:52:23AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:52:43:52SAUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:52:43:52SAUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:52:43:52SAUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:52:43:52SAUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:53:50.469215AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:53:50.469215AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:53:50.470212AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:53:50.470212AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:53:58.371253	AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:53:58.371253	AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:53:58.371253	AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:53:58.372244	AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:54:06.307548		AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:54:06.307548		AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:54:06.307548		AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:54:06.307548		AUTHOR:notification_service	TOPIC:Adding record to table restaurants	TYPE:log	DEBUG	
+20:55:34.384493		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+20:55:34.385490		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+20:55:34.385490		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+20:55:34.385490		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+20:56:32.707152		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+20:56:32.712138		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+20:56:32.715130		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+20:56:32.717127		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+20:56:35.710938		AUTHOR:notification_service		TOPIC:Table reservations updated with CLEAR.		TYPE:log		DEBUG		CONTENT:Event data:{}
+20:56:35.722388		AUTHOR:reservation_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+20:56:35.725403		AUTHOR:reservation_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+20:56:35.728372		AUTHOR:reservation_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+20:56:35.730367		AUTHOR:reservation_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+20:56:35.733386		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+20:56:35.738374		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+20:56:35.739342		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 0, 'email': 'tomek@gmail.com', 'restaurant_id': 0, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+20:56:35.739342		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+20:56:35.741336		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+20:56:35.744331		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+20:56:35.744331		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 1, 'email': 'robert@gmail.com', 'restaurant_id': 1, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+20:56:35.745326		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+20:56:35.748320		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+20:56:35.748320		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 2, 'email': 'justyna@gmail.com', 'restaurant_id': 2, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+20:56:35.748320		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+20:56:35.751311		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+20:56:35.751311		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 3, 'email': 'anton@gmail.com', 'restaurant_id': 3, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+20:56:35.752307		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+20:56:35.754304		AUTHOR:reservation_service		TOPIC:create reservation function called		TYPE:log		DEBUG		
+20:56:35.754304		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+20:56:35.755301		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 4, 'email': 'khanh@gmail.com', 'restaurant_id': 0, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+20:56:35.755301		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+20:56:35.758293		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 5, 'email': 'pawel@gmail.com', 'restaurant_id': 1, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+20:56:35.758293		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+20:56:35.762283		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'email': 'new_email@gmail.com', 'date': datetime.date(2020, 5, 6), 'time': 'dinner'}
+20:56:35.762283		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+20:57:06.384954		AUTHOR:reservation_service		TOPIC:create reservation function called		TYPE:log		DEBUG		
+20:57:06.385904		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:02:26.890860		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:02:26.904822		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:02:26.906818		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:02:26.908843		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:02:28.534025		AUTHOR:notification_service		TOPIC:Table reservations updated with CLEAR.		TYPE:log		DEBUG		CONTENT:Event data:{}
+21:02:28.535023		AUTHOR:reservation_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:02:28.538015		AUTHOR:reservation_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:02:28.541009		AUTHOR:reservation_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:02:28.544000		AUTHOR:reservation_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:02:28.545993		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:02:28.549983		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:02:28.549983		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 0, 'email': 'tomek@gmail.com', 'restaurant_id': 0, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+21:02:28.550981		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:02:28.551978		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:02:28.554970		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 1, 'email': 'robert@gmail.com', 'restaurant_id': 1, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+21:02:28.554970		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:02:28.554970		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:02:28.557961		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 2, 'email': 'justyna@gmail.com', 'restaurant_id': 2, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+21:02:28.557961		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:02:28.557961		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:02:28.560953		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:02:28.560953		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 3, 'email': 'anton@gmail.com', 'restaurant_id': 3, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+21:02:28.561951		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:02:28.563944		AUTHOR:reservation_service		TOPIC:create reservation function called		TYPE:log		DEBUG		
+21:02:28.563944		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:02:28.564942		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 4, 'email': 'khanh@gmail.com', 'restaurant_id': 0, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+21:02:28.565940		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:02:28.567936		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 5, 'email': 'pawel@gmail.com', 'restaurant_id': 1, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+21:02:28.568951		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:02:28.570926		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'email': 'new_email@gmail.com', 'date': datetime.date(2020, 5, 6), 'time': 'dinner'}
+21:02:28.571952		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:06:36.260825		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:06:36.273766		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:06:36.276757		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:06:36.279751		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:06:38.892908		AUTHOR:notification_service		TOPIC:Table reservations updated with CLEAR.		TYPE:log		DEBUG		CONTENT:Event data:{}
+21:06:38.893907		AUTHOR:reservation_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:06:38.896900		AUTHOR:reservation_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:06:38.899891		AUTHOR:reservation_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:06:38.901884		AUTHOR:reservation_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:06:38.903880		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:06:38.907869		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:06:38.908865		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 0, 'email': 'tomek@gmail.com', 'restaurant_id': 0, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+21:06:38.909863		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:06:38.911858		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:06:38.914850		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:06:38.914850		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 1, 'email': 'robert@gmail.com', 'restaurant_id': 1, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+21:06:38.914850		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:06:38.917842		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:06:38.918839		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 2, 'email': 'justyna@gmail.com', 'restaurant_id': 2, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+21:06:38.918839		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:06:38.921832		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:06:38.922829		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 3, 'email': 'anton@gmail.com', 'restaurant_id': 3, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+21:06:38.922829		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:06:38.924824		AUTHOR:reservation_service		TOPIC:create reservation function called		TYPE:log		DEBUG		
+21:06:38.924824		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:06:38.926820		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 4, 'email': 'khanh@gmail.com', 'restaurant_id': 0, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+21:06:38.926820		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:06:38.929810		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'_id': 5, 'email': 'pawel@gmail.com', 'restaurant_id': 1, 'date': datetime.date(2020, 5, 6), 'time': 'breakfast'}
+21:06:38.930809		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:06:38.933801		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'email': 'new_email@gmail.com', 'date': datetime.date(2020, 5, 6), 'time': 'dinner', '_id': 19}
+21:06:38.933801		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:07:34.208365		AUTHOR:reservation_service		TOPIC:create reservation function called		TYPE:log		DEBUG		
+21:07:34.208365		AUTHOR:reservation_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:07:34.217339		AUTHOR:notification_service		TOPIC:Table reservations updated with CREATE.		TYPE:log		DEBUG		CONTENT:Event data:{'email': 'new_email@gmail.com', 'date': datetime.date(2020, 5, 6), 'time': 'dinner', '_id': 20}
+21:07:34.218337		AUTHOR:notification_service		TOPIC:Adding record to table reservations		TYPE:log		DEBUG		
+21:12:46.030113		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:12:46.034078		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:12:46.036099		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
+21:12:46.039064		AUTHOR:notification_service		TOPIC:Adding record to table restaurants		TYPE:log		DEBUG		
