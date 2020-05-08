@@ -14,6 +14,14 @@ class Service:
     """
     def __init__(self, service_name, url='localhost', table_names=None,
                  owned_tables=None, db_connector=None, console_debug=True):
+        """
+        :param service_name:
+        :param url:
+        :param table_names:
+        :param owned_tables:
+        :param db_connector:
+        :param console_debug:
+        """
         self.service_name = service_name
         self.table_names = table_names
         self.db_con = db_connector
@@ -33,6 +41,8 @@ class Service:
         # itself
         if table_names is not None:
             for table_name in table_names:
+                self.channel.exchange_declare(exchange=table_name,
+                                              exchange_type='fanout')
                 if table_name not in self.owned_tables:
                     self._subscribe_to_table(table_name)
 
@@ -70,8 +80,7 @@ class Service:
             callback function in a separate thread
         """
         queue = self.channel.queue_declare(queue=self.service_name+table_name)
-        self.channel.exchange_declare(exchange=table_name,
-                                      exchange_type='fanout')
+
         self.channel.queue_bind(exchange=table_name,
                                 queue=queue.method.queue)
 
@@ -194,6 +203,6 @@ class Service:
     def run(self):
         """starts RPC server in a separate thread and starts listening to events
         """
-        t = threading.Thread(target=self.server.start)
+        t = threading.Thread(target=self.server.start, daemon=True)
         t.start()
         self.channel.start_consuming()
